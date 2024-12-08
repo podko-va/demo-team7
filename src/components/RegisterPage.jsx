@@ -15,12 +15,14 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      <div className="w-1/2 flex items-center justify-center bg-gray-100">
+      <div className="w-1/2 flex items-center justify-center bg-sky-100">
         <div className="bg-white rounded-lg shadow-lg p-8 w-96">
           <h2 className="text-2xl font-semibold text-gray-700 mb-6">
             Create an Account
           </h2>
-          <p className="text-sm text-gray-500 mb-4">Please fill in the details below to sign up.</p>
+          <p className="text-sm text-gray-500 mb-4">
+            Please fill in the details below to sign up.
+          </p>
 
           <form>
             <div className="mb-4">
@@ -60,7 +62,10 @@ const RegisterPage = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="confirm-password" className="block text-gray-600 mb-2">
+              <label
+                htmlFor="confirm-password"
+                className="block text-gray-600 mb-2"
+              >
                 Confirm Password
               </label>
               <input
