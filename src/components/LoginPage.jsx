@@ -7,7 +7,7 @@ const LoginPage = () => {
   return (
     <div className="flex min-h-screen">
       {/* Left Side */}
-      <div className="w-1/2 bg-sky-300 flex items-center justify-center">
+      <div className="w-1/2 bg-blue-500 flex items-center justify-center">
         <div className="text-white text-center">
           <div className="rounded-full w-20 h-20 bg-blue-400 mb-6"></div>
           <h1 className="text-3xl font-bold">Welcome</h1>
