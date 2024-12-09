@@ -54,7 +54,7 @@ const LoginPage = () => {
                 />
                 <span className="ml-2 text-sm text-gray-500">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-blue-500 hover:underline">
+              <a href="/forgot-password" className="text-sm text-blue-500 hover:underline">
                 Forgot Password?
               </a>
             </div>
