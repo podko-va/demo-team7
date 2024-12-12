@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../contexts/AuthContext"; 
 
-const RegisterPage = () => {
+const Register = () => {
+  const { registerUser } = useContext(AuthContext); 
   const navigate = useNavigate();
   const {
     register,
@@ -10,20 +12,19 @@ const RegisterPage = () => {
     watch,
     formState: { errors },
   } = useForm();
-
-  //formData state tracks the users input while typing.
-
   const [formData, setFormData] = useState({});
 
-  const onSubmit = (data) => {
-    // Save final form data to localStorage
-    localStorage.setItem("userData", JSON.stringify(data));
-    console.log("Form Submitted:", data);
-    navigate("/"); // Redirect to the home page
+  const onSubmit = async (data) => {
+    try {
+      await registerUser(data);
+      //alert("Registration successful!");
+      navigate("/"); // Redirect to home page after successful registration
+    } catch (error) {
+      alert(error.message || "An error occurred during registration.");
+    }
   };
 
   useEffect(() => {
-    // Save form data dynamically to localStorage as the user types
     localStorage.setItem("formProgress", JSON.stringify(formData));
   }, [formData]);
 
@@ -38,6 +39,7 @@ const RegisterPage = () => {
         </div>
       </div>
 
+      {/* Right Side */}
       <div className="w-1/2 flex items-center justify-center bg-sky-100">
         <div className="bg-white rounded-lg shadow-lg p-8 w-96">
           <h2 className="text-2xl font-semibold text-gray-700 mb-6">
@@ -49,10 +51,11 @@ const RegisterPage = () => {
 
           <form
             onSubmit={handleSubmit((data) => {
-              setFormData(data); // Update local state
-              onSubmit(data); // Handle form submission
+              setFormData(data); 
+              onSubmit(data); 
             })}
           >
+            {/* Name */}
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-600 mb-2">
                 Name
@@ -69,6 +72,7 @@ const RegisterPage = () => {
               )}
             </div>
 
+            {/* Email */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-600 mb-2">
                 Email
@@ -91,6 +95,7 @@ const RegisterPage = () => {
               )}
             </div>
 
+            {/* Password */}
             <div className="mb-4">
               <label htmlFor="password" className="block text-gray-600 mb-2">
                 Password
@@ -108,17 +113,17 @@ const RegisterPage = () => {
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
               />
-              {errors.email && (
+              {errors.password && (
                 <p className="text-red-500 text-sm">
                   {errors.password.message}
                 </p>
               )}
             </div>
 
+            {/* Confirm Password */}
             <div className="mb-4">
               <label
                 htmlFor="confirm-password"
-                {...register("confirm-passord")}
                 className="block text-gray-600 mb-2"
               >
                 Confirm Password
@@ -141,6 +146,26 @@ const RegisterPage = () => {
               )}
             </div>
 
+            {/* Role Dropdown */}
+            <div className="mb-4">
+              <label htmlFor="role" className="block text-gray-600 mb-2">
+                Role
+              </label>
+              <select
+                {...register("role", { required: "Role is required" })}
+                id="role"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select Role</option>
+                <option value="organizer">Organizer</option>
+                <option value="attendee">Attendee</option>
+              </select>
+              {errors.role && (
+                <p className="text-red-500 text-sm">{errors.role.message}</p>
+              )}
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
@@ -158,16 +183,10 @@ const RegisterPage = () => {
               Sign in
             </a>
           </p>
-          <button
-            onClick={() => navigate("/")} // Navigate to the home page
-            className="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600"
-          >
-            Go Back to Home
-          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default RegisterPage;
+export default Register;
