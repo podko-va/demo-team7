@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ForgotPasswordPage = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
 
   return (
@@ -66,4 +66,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ForgotPassword;

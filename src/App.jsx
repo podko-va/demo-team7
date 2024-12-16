@@ -1,39 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { getAllData } from "./util/index";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./components/HomePage"; // HomePage component
-import LoginPage from "./components/LoginPage"; // LoginPage component
-import RegisterPage from "./components/RegisterPage";
-import ForgotPasswordPage from "./components/ForgotPasswordPage";
-const URL = "http://localhost:8000/api/v1/";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import Header from "./components/Header";
+import Register from "./components/user/Register";
+import Login from "./components/user/Login";
+import HomePage from "./components/HomePage";
+import ForgotPassword from "./components/user/ForgotPassword";
+import ManageUser from "./components/user/ManageUsers";
+import UpdateUser from "./components/user/UpdateUser";
+import { DefaultSidebar } from "./components/DefaultSidebar";
 
-function App() {
-  // const [message, setMessage] = useState("");
+const App = () => {
 
-  useEffect(() => {
-    (async () => {
-      const myData = await getAllData(URL);
-      setMessage(myData.data);
-    })();
+  const location = useLocation(); // Get the current location (path)
 
-    return () => {
-      console.log("unmounting");
-    };
-  }, []);
+  // Conditionally render the sidebar based on the route
+  const shouldShowSidebar =
+    location.pathname !== "/login" && location.pathname !== "/register"; // Exclude Login and Register
 
   return (
-    <Router>
-      <div>
-        <Routes>
-          {/* <h1>{message}</h1> */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        </Routes>
+    <AuthProvider>
+      <Header />
+      <div className="flex">
+        {shouldShowSidebar && <DefaultSidebar />}
+        <div className="flex-1 p-4">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/manage-users" element={<ManageUser />} />
+            <Route path="/update-user/:id" element={<UpdateUser />} />
+          </Routes>
+        </div>
       </div>
-    </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
