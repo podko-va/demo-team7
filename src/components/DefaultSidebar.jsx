@@ -17,6 +17,7 @@ import {
   InboxIcon,
   PowerIcon,
   HomeIcon,
+  CalendarDateRangeIcon,
 } from "@heroicons/react/24/solid";
 
 export function DefaultSidebar() {
@@ -53,6 +54,13 @@ export function DefaultSidebar() {
               <PresentationChartBarIcon className="h-5 w-5" />
             </ListItemPrefix>
             Dashboard
+          </ListItem>
+          {/* Add the Manage Events Link */}
+          <ListItem>
+            <ListItemPrefix>
+              <CalendarDateRangeIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            <Link to="/manage-events" className="text-blue-500">Manage Events</Link>
           </ListItem>
           {/* Add the Manage Users Link */}
           <ListItem>

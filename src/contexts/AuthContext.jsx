@@ -1,5 +1,7 @@
 import React, { createContext, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+
 
 export const AuthContext = createContext();
 
@@ -36,6 +38,18 @@ export const AuthProvider = ({ children }) => {
       throw error.response?.data?.message || "Login failed.";
     }
   };
+
+/*   const login = async (credentials) => {
+    try {
+      const response = await axios.post(`${API_URL}/login`, credentials);
+      Cookies.set("token", response.data.token); 
+      setUser(response.data.user);
+      return response.data;
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw error.response?.data?.message || "Login failed.";
+    }
+  }; */
 
   // Logout a user
   const logout = async () => {
