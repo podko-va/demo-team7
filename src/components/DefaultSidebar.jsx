@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import {
   Card,
   Typography,
@@ -21,10 +21,10 @@ import {
 } from "@heroicons/react/24/solid";
 
 export function DefaultSidebar() {
-  const [isOpen, setIsOpen] = useState(true); 
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen); 
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -41,12 +41,13 @@ export function DefaultSidebar() {
           </Typography>
         </div>
         <List>
-
           <ListItem>
             <ListItemPrefix>
               <HomeIcon className="h-5 w-5" />
             </ListItemPrefix>
-            <Link to="/" className="text-blue-500">Home</Link>
+            <Link to="/" className="text-blue-500">
+              Home
+            </Link>
           </ListItem>
           {/* Other sidebar items */}
           <ListItem>
@@ -60,14 +61,27 @@ export function DefaultSidebar() {
             <ListItemPrefix>
               <CalendarDateRangeIcon className="h-5 w-5" />
             </ListItemPrefix>
-            <Link to="/manage-events" className="text-blue-500">Manage Events</Link>
+            <Link to="/manage-events" className="text-blue-500">
+              Manage Events
+            </Link>
           </ListItem>
           {/* Add the Manage Users Link */}
           <ListItem>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />
             </ListItemPrefix>
-            <Link to="/manage-users" className="text-blue-500">Manage Users</Link>
+            <Link to="/manage-users" className="text-blue-500">
+              Manage Users
+            </Link>
+          </ListItem>
+          {/* Add the Registrations Link */}
+          <ListItem>
+            <ListItemPrefix>
+              <ShoppingBagIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            <Link to="/registrations" className="text-blue-500">
+              Registrations
+            </Link>
           </ListItem>
         </List>
       </Card>
