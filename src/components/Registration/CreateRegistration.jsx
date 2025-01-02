@@ -12,21 +12,28 @@ const CreateRegistration = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!token) {
-      setError("You must be logged in to create a registration.");
-      return;
-    }
+    // if (!token) {
+    //   setError("You must be logged in to create a registration.");
+    //   return;
+    // }
     setLoading(true);
     setError(null);
     setSuccess(null);
 
     try {
       const registrationData = { eventid: parseInt(eventid, 10), status };
+      console.log("registrationData", registrationData);
+
       await createRegistration(registrationData);
       setSuccess("Registration created successfully!");
       setEventid(""); // Clear form fields
     } catch (err) {
-      setError("Failed to create registration. Please try again.");
+      console.error("Error during registration:", err.response || err);
+      if (err.response?.status === 401) {
+        setError("You must be logged in to create a registration.");
+      } else {
+        setError("Failed to create registration. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -78,8 +85,8 @@ const CreateRegistration = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
             <option value="pending">Pending</option>
-            <option value="approved">Confrimed</option>
-            <option value="rejected">Canceled</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="cancelled">Cancelled</option>
           </select>
         </div>
 

@@ -2,19 +2,19 @@ import React, { createContext, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
 
-  const API_URL = "http://localhost:8000/api/v1/users"; 
+  const API_URL = "http://localhost:8000/api/v1/users";
 
   // Register a new user
   const registerUser = async (userData) => {
     try {
       const response = await axios.post(`${API_URL}/register`, userData);
+      console.log("Response: ", response);
       setUser(response.data.user);
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-/*   const login = async (credentials) => {
+  /*   const login = async (credentials) => {
     try {
       const response = await axios.post(`${API_URL}/login`, credentials);
       Cookies.set("token", response.data.token); 
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Get all users 
+  // Get all users
   const getAllUsers = async () => {
     try {
       const response = await axios.get(API_URL, {
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data; 
+      return response.data;
     } catch (error) {
       console.error("Error fetching users:", error);
       throw error.response?.data?.message || "Failed to fetch users.";
@@ -90,7 +90,7 @@ export const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data.user; 
+      return response.data.user;
     } catch (error) {
       console.error("Error updating user:", error);
       throw error.response?.data?.message || "Failed to update user.";
