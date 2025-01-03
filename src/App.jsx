@@ -20,6 +20,8 @@ import ManageEvents from "./components/event/ManageEvents";
 import UpdateEvent from "./components/event/UpdateEvent";
 import CreateEvent from "./components/event/CreateEvent";
 import CreateRegistration from "./components/Registration/CreateRegistration";
+import ProtectedRoute from "./components/ProtectedRoute"; 
+import Unauthorized from "./components/Unauthorized";
 
 const App = () => {
   const location = useLocation(); // Get the current location (path)
@@ -41,13 +43,58 @@ const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/manage-users" element={<ManageUser />} />
-                <Route path="/update-user/:id" element={<UpdateUser />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                
+                {/* Protected Routes */}
+                <Route
+                  path="/manage-users"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "organizer"]}>
+                      <ManageUser />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/update-user/:id"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "organizer"]}>
+                      <UpdateUser />
+                    </ProtectedRoute>
+                  }
+                />
 
-                <Route path="/manage-events" element={<ManageEvents />} />
-                <Route path="/create-event" element={<CreateEvent />} />
-                <Route path="/update-event/:id" element={<UpdateEvent />} />
-                <Route path="/registrations" element={<CreateRegistration />} />
+                <Route
+                  path="/manage-events"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "organizer"]}>
+                      <ManageEvents />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/create-event"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "organizer"]}>
+                      <CreateEvent />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/update-event/:id"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "organizer"]}>
+                      <UpdateEvent />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/registrations"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "organizer", "attendee"]}>
+                      <CreateRegistration />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </div>
           </div>
