@@ -5,30 +5,9 @@ export const UserAuthContext = createContext();
 
 export const UserAuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  //console.log("Risqua ", localStorage);
+
   const API_URL = "http://localhost:8000/api/v1";
 
-  // useEffect(() => {
-  //   const validateToken = async () => {
-  //     if (token) {
-  //       try {
-  //         console.log("Risqua Token is valid. 1"); // Debugging
-  //         await axios.get(`${API_URL}/validate-token`, {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         });
-  //         console.log("Risqua Token is valid. 2"); // Debugging
-  //       } catch (err) {
-  //         console.error("Token is invalid, logging out user.");
-  //         setToken(null);
-  //         //localStorage.removeItem("token");
-  //       }
-  //     }
-  //   };
-  //   validateToken();
-  // }, [token]);
-
-
-  ///***without validate token */
   // Create a new registration
   const createRegistration = async (registrationData) => {
     if (!token) {
@@ -44,11 +23,12 @@ export const UserAuthProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
+
         }
       );
       return response.data;
     } catch (error) {
-      console.error("Error in createRegistration:", error.response || error);
+      console.error("Error creating registration:", error);
       throw error;
     }
   };
