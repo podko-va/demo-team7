@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import { UserAuthContext } from "../../contexts/UserAuthContext";
+import axios from "axios";
 
 const CreateRegistration = () => {
   const { token, createRegistration } = useContext(UserAuthContext); // Access token and context function
   const [eventid, setEventid] = useState(""); // State for event ID
-  const [status, setStatus] = useState("pending"); // Default status
+  const [status, setStatus] = useState("Confirmed"); // Default status
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -12,28 +13,40 @@ const CreateRegistration = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!token) {
-    //   setError("You must be logged in to create a registration.");
-    //   return;
-    // }
+
     setLoading(true);
     setError(null);
     setSuccess(null);
 
     try {
-      const registrationData = { eventid: parseInt(eventid, 10), status };
+      const registrationData = {
+        eventid: parseInt(eventid, 10),
+        status: status.charAt(0).toUpperCase() + status.slice(1).toLowerCase(), // Ensure status matches ENUM format
+      };
       console.log("registrationData", registrationData);
+      console.log("Token:", token);
 
-      await createRegistration(registrationData);
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/registrations",
+        registrationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token for authentication
+          },
+        }
+      );
+
+      // Handle success
+      console.log("Response:", response.data);
       setSuccess("Registration created successfully!");
-      setEventid(""); // Clear form fields
+      setEventid("");
     } catch (err) {
-      console.error("Error during registration:", err.response || err);
-      if (err.response?.status === 401) {
-        setError("You must be logged in to create a registration.");
-      } else {
-        setError("Failed to create registration. Please try again.");
-      }
+      // Handle error
+      console.error("Error creating registration:", err);
+      setError(
+        err.response?.data?.message ||
+          "Failed to create registration. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -84,9 +97,8 @@ const CreateRegistration = () => {
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option value="pending">Pending</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
           </select>
         </div>
 
