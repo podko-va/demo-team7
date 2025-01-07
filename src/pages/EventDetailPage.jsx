@@ -31,7 +31,7 @@ const EventDetailPage = () => {
     • Best practices in modern web development
     • Networking with industry professionals
     • Interactive workshops and code sessions`,
-    imageUrl: "/api/placeholder/1200/400",
+    imageUrl: "/images/tech-conferences.jpg",
     price: 299,
     status: "upcoming",
     organizer: {

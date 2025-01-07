@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, MapPin, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -45,29 +46,31 @@ const HomePage = () => {
         <CardContent>
           <div className="space-y-4">
             {upcomingEvents.map((event) => (
-              <div key={event.id} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-white p-3 rounded-lg shadow-sm">
-                  <Calendar className="h-6 w-6 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium">{event.title}</h3>
-                  <div className="text-sm text-gray-600 space-y-1 mt-1">
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      {event.date} at {event.time}
+                <Link key={event.id} to={`/demo-event`}>
+                    <div key={event.id} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                        <div className="bg-white p-3 rounded-lg shadow-sm">
+                        <Calendar className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div className="flex-1">
+                        <h3 className="font-medium">{event.title}</h3>
+                        <div className="text-sm text-gray-600 space-y-1 mt-1">
+                            <div className="flex items-center gap-2">
+                            <Clock className="h-4 w-4" />
+                            {event.date} at {event.time}
+                            </div>
+                            <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            {event.location}
+                            </div>
+                        </div>
+                        </div>
+                        <span className={`text-sm px-2 py-1 rounded ${
+                        event.type === 'created' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                        }`}>
+                        {event.type === 'created' ? 'Created' : 'Registered'}
+                        </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      {event.location}
-                    </div>
-                  </div>
-                </div>
-                <span className={`text-sm px-2 py-1 rounded ${
-                  event.type === 'created' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-                }`}>
-                  {event.type === 'created' ? 'Created' : 'Registered'}
-                </span>
-              </div>
+                </Link>
             ))}
           </div>
         </CardContent>

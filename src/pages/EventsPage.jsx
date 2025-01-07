@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Calendar, MapPin, Users, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const EventsPage = () => {
   const events = [
@@ -101,30 +102,32 @@ const EventsPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {events.map((event) => (
-            <Card key={event.id}>
-              <img
-                src={event.image}
-                alt={event.title}
-                className="w-full h-48 object-cover rounded-t-lg"
-              />
-              <CardContent className="pt-4">
-                <h3 className="font-medium text-lg mb-2">{event.title}</h3>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    {event.date}
+            <Link key={event.id} to={`/demo-event/`}>
+              <Card key={event.id}>
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-48 object-cover rounded-t-lg"
+                />
+                <CardContent className="pt-4">
+                  <h3 className="font-medium text-lg mb-2">{event.title}</h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      {event.date}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      {event.location}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4" />
+                      {event.participants} participants
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    {event.location}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    {event.participants} participants
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </div>
