@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomePage from './pages/HomePage';
+import AltHomePage from './pages/AltHomePage';
 import EventsPage from './pages/EventsPage';
 import ProfilePage from './pages/ProfilePage';
 import CreateEventPage from './pages/CreateEventPage';
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/create-event" element={<CreateEventPage />} />
             <Route path="/demo-event" element={<DemoEventDetail />} />
+            <Route path="/altHomePage" element={<AltHomePage />} />
           </Routes>
         </Layout>
     </AuthProvider>

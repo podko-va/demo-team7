@@ -36,7 +36,7 @@ const EventDetailPage = () => {
     status: "upcoming",
     organizer: {
       name: "Tech Events Inc",
-      logo: "/api/placeholder/64/64"
+      logo: ""
     },
     schedule: [
       {
